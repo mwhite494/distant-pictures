@@ -87,7 +87,7 @@ const parser = new Readline({
 serial.pipe(parser);
 parser.on('data', function(data) {
   console.log('Data:', data);
-  io.emit('server-msg', data);
+  //io.emit('server-msg', data);
   if(data==='light'){
     console.log('Taking picture...');
     /// First, we create a name for the new picture.
