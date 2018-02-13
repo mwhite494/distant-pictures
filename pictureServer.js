@@ -111,9 +111,9 @@ parser.on('data', function(data) {
     if (lastImage !== '') {
       // open a file called "lenna.png" 
       Jimp.read("./public/"+lastImage, function (err, lenna) {
-      if (err) throw err;
+        console.log(err);
         lenna.brightness(1)            // edit the brightness 
-             .write('/public/newImage.jpg');   // save 
+             .write('newImage.jpg');   // save 
       });
     }
     io.emit('newPicture','newImage.jpg');
