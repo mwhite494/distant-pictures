@@ -88,6 +88,10 @@ serial.pipe(parser);
 parser.on('data', function(data) {
   console.log('Data:', data);
   io.emit('server-msg', data);
+  if(data==='light'){
+    console.log('Taking picture...');
+    
+  }
 });
 //----------------------------------------------------------------------------//
 
