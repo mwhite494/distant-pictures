@@ -90,7 +90,17 @@ parser.on('data', function(data) {
   io.emit('server-msg', data);
   if(data==='light'){
     console.log('Taking picture...');
-    
+    /// First, we create a name for the new picture.
+    /// The .replace() function removes all special characters from the date.
+    /// This way we can use it as the filename.
+    var imageName = new Date().toString().replace(/[&\/\\#,+()$~%.'":*?<>{}\s-]/g, '');
+
+    console.log('making a making a picture at'+ imageName); // Second, the name is logged to the console.
+
+    //Third, the picture is  taken and saved to the `public/`` folder
+    NodeWebcam.capture('public/'+imageName, opts, function( err, data ) {
+    io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
+    /// The browser will take this new name and load the picture from the public folder.
   }
 });
 //----------------------------------------------------------------------------//
