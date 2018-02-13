@@ -110,7 +110,7 @@ parser.on('data', function(data) {
     console.log('Brightness: '+data.substring(3,data.length));
     if (lastImage !== '') {
       // open a file called "lenna.png" 
-      Jimp.read("public/"lastImage, function (err, lenna) {
+      Jimp.read("./public/"+lastImage, function (err, lenna) {
       if (err) throw err;
         lenna.brightness(1)            // edit the brightness 
              .write('/public/newImage.jpg');   // save 
