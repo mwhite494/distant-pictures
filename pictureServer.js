@@ -109,14 +109,15 @@ parser.on('data', function(data) {
   }
   else if(data.includes('pot')) {
     console.log('Brightness: '+data.substring(3,data.length));
+    var cb;
     if (lastImage !== '') {
       // open a file called "lenna.png" 
       Jimp.read("public/"+lastImage, function (err, lenna) {
-        console.log(err);
         lenna.brightness(1)            // edit the brightness 
-             .write('public/newImage.jpg');   // save 
+             .getBase64(Jimp.MIME_JPEG,cb);   // save 
       });
-      io.emit('newPicture','newImage.jpg');
+      console.log(cb);
+      io.emit('editPicture',cb);
     }
   }
 });
