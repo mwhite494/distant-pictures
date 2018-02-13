@@ -14,10 +14,6 @@ Usage: This file is called automatically when the webpage is served.
 // WebSocket connection setup
 var socket = io();
 
-// Image brightness library
-var imageBrightness = require('image-brightness');
-var originalImage = '';
-
 // send out LedOn message over socket
 function ledON() {
   socket.emit('ledON');
@@ -37,21 +33,12 @@ function takePicture(){
 
 socket.on('newPicture', function(msg) {
   document.getElementById('pictureContainer').src=msg;
-  originalImage = msg;
 });
 // read the data from the message that the server sent and change the
 // background of the webpage based on the data in the message
 socket.on('server-msg', function(msg) {
   msg = msg.toString();
   console.log('msg:', msg);
-  //if (msg.includes('pot') && originalImage !== '') {
-    //var result = imageBrightness({
-    //  data: originalImage,
-    //  adjustment: parseInt(msg.substring(3,msg.length))
-    //});
-    //document.getElementById('pictureContainer').src=result;
-  //}
-  /*
   switch (msg) {
     case "light":
       document.body.style.backgroundColor = "white";
@@ -65,5 +52,4 @@ socket.on('server-msg', function(msg) {
       //console.log("something else");
       break;
   }
-  */
 });

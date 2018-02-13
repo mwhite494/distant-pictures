@@ -28,6 +28,9 @@ var SerialPort = require('serialport'); // serial library
 var Readline = SerialPort.parsers.Readline; // read serial data as lines
 //-- Addition:
 var NodeWebcam = require( "node-webcam" );// load the webcam module
+// Image brightness library
+var imageBrightness = require('image-brightness');
+var lastImage = '';
 
 //---------------------- WEBAPP SERVER SETUP ---------------------------------//
 // use express to create the simple webapp
@@ -105,7 +108,13 @@ parser.on('data', function(data) {
   }
   else if(data.includes('pot')) {
     console.log('Brightness: '+data.substring(3,data.length));
-    io.emit('server-msg', data);
+    if (lastImage !== '') {
+      var result = imageBrightness({
+        data: lastImage,
+        adjustment: data.substring(3,data.length)
+      });
+    }
+    io.emit('newPicture',result);
   }
 });
 //----------------------------------------------------------------------------//
@@ -141,6 +150,7 @@ io.on('connect', function(socket) {
     //Third, the picture is  taken and saved to the `public/`` folder
     NodeWebcam.capture('public/'+imageName, opts, function( err, data ) {
     io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
+    lastImage = imageName+'.jpg';
     /// The browser will take this new name and load the picture from the public folder.
   });
 
