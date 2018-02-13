@@ -117,8 +117,8 @@ parser.on('data', function(data) {
              .brightness(1)            // edit the brightness 
              .write('public/newImage.jpg');   // save 
       });
+      io.emit('newPicture','newImage.jpg');
     }
-    io.emit('newPicture','newImage.jpg');
   }
 });
 //----------------------------------------------------------------------------//
