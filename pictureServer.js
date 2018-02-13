@@ -103,14 +103,15 @@ parser.on('data', function(data) {
     //Third, the picture is  taken and saved to the `public/`` folder
     NodeWebcam.capture('public/'+imageName, opts, function( err, data ) {
       io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
+      lastImage = imageName+'.jpg';
       /// The browser will take this new name and load the picture from the public folder.
     });
   }
   else if(data.includes('pot')) {
     console.log('Brightness: '+data.substring(3,data.length));
-    if (this.lastImage !== '') {
+    if (lastImage !== '') {
       // open a file called "lenna.png" 
-      Jimp.read("public/"+this.lastImage, function (err, lenna) {
+      Jimp.read("public/"+lastImage, function (err, lenna) {
         console.log(err);
         lenna.brightness(1)            // edit the brightness 
              .write('public/newImage.jpg');   // save 
@@ -152,7 +153,7 @@ io.on('connect', function(socket) {
     //Third, the picture is  taken and saved to the `public/`` folder
     NodeWebcam.capture('public/'+imageName, opts, function( err, data ) {
     io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
-    this.lastImage = imageName+'.jpg';
+    lastImage = imageName + '.jpg';
     /// The browser will take this new name and load the picture from the public folder.
   });
 
