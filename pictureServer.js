@@ -99,8 +99,9 @@ parser.on('data', function(data) {
 
     //Third, the picture is  taken and saved to the `public/`` folder
     NodeWebcam.capture('public/'+imageName, opts, function( err, data ) {
-    io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
-    /// The browser will take this new name and load the picture from the public folder.
+      io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
+      /// The browser will take this new name and load the picture from the public folder.
+    });
   }
 });
 //----------------------------------------------------------------------------//
