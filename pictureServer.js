@@ -86,7 +86,7 @@ const parser = new Readline({
 // Read data that is available on the serial port and send it to the websocket
 serial.pipe(parser);
 parser.on('data', function(data) {
-  console.log('Data:', data);
+  //console.log('Data:', data);
   //io.emit('server-msg', data);
   if(data==='light'){
     console.log('Taking picture...');
@@ -102,6 +102,10 @@ parser.on('data', function(data) {
       io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
       /// The browser will take this new name and load the picture from the public folder.
     });
+  }
+  else if(data.includes('pot')) {
+    console.log('Brightness: '+data.substring(3,data.length));
+    io.emit('server-msg', data);
   }
 });
 //----------------------------------------------------------------------------//
