@@ -29,7 +29,7 @@ var Readline = SerialPort.parsers.Readline; // read serial data as lines
 //-- Addition:
 var NodeWebcam = require( "node-webcam" );// load the webcam module
 // Image brightness library
-var imageBrightness = require('image-brightness');
+var Jimp = require('jimp');
 var lastImage = '';
 
 //---------------------- WEBAPP SERVER SETUP ---------------------------------//
@@ -109,12 +109,14 @@ parser.on('data', function(data) {
   else if(data.includes('pot')) {
     console.log('Brightness: '+data.substring(3,data.length));
     if (lastImage !== '') {
-      var result = imageBrightness({
-        data: lastImage,
-        adjustment: data.substring(3,data.length)
+      // open a file called "lenna.png" 
+      Jimp.read(lastImage, function (err, lenna) {
+      if (err) throw err;
+        lenna.brightness(1)            // edit the brightness 
+             .write('newImage.jpg'); // save 
       });
     }
-    io.emit('newPicture',result);
+    io.emit('newPicture','newImage.jpg');
   }
 });
 //----------------------------------------------------------------------------//
