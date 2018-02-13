@@ -110,10 +110,12 @@ parser.on('data', function(data) {
     console.log('Brightness: '+data.substring(3,data.length));
     if (lastImage !== '') {
       // open a file called "lenna.png" 
-      Jimp.read("./public/"+lastImage, function (err, lenna) {
+      Jimp.read("public/"+lastImage, function (err, lenna) {
         console.log(err);
-        lenna.brightness(1)            // edit the brightness 
-             .write('newImage.jpg');   // save 
+        lenna.resize(256, 256)            // resize 
+             .quality(60)                 // set JPEG quality 
+             .brightness(1)            // edit the brightness 
+             .write('public/newImage.jpg');   // save 
       });
     }
     io.emit('newPicture','newImage.jpg');
