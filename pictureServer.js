@@ -119,6 +119,7 @@ parser.on('data', function(data) {
       console.log(cb);
       io.emit('editPicture',cb);
     }*/
+    io.emit('editPicture',data.substring(3,data.length))
   }
 });
 //----------------------------------------------------------------------------//
