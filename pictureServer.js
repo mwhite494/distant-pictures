@@ -112,8 +112,7 @@ parser.on('data', function(data) {
     if (lastImage !== '') {
       var result = imageBrightness({
         data: lastImage,
-        adjustment: 30,
-        asDataURL: true
+        adjustment: 30
       });
       console.log(result);
       io.emit('editPicture',result);
