@@ -44,13 +44,13 @@ socket.on('newPicture', function(msg) {
 socket.on('server-msg', function(msg) {
   msg = msg.toString();
   console.log('msg:', msg);
-  if (msg.includes('pot') && originalImage !== '') {
-    var result = imageBrightness({
-      data: originalImage,
-      adjustment: parseInt(msg.substring(3,msg.length))
-    });
-    document.getElementById('pictureContainer').src=result;
-  }
+  //if (msg.includes('pot') && originalImage !== '') {
+    //var result = imageBrightness({
+    //  data: originalImage,
+    //  adjustment: parseInt(msg.substring(3,msg.length))
+    //});
+    //document.getElementById('pictureContainer').src=result;
+  //}
   /*
   switch (msg) {
     case "light":
